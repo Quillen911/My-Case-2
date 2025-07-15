@@ -19,7 +19,7 @@
     <table border="5" cellpadding="8" cellspacing="0" >
         <thead>
             <tr>
-            <th>ID</th>
+                <th>ID</th>
                 <th>Ürün Adı</th>
                 <th>Kategori ID</th>
                 <th>Kategori Adı</th>
@@ -52,7 +52,8 @@
                 @endforeach
             </tbody>
     </table> <br>
-    <button>Satın Al</button><br>   
+
+    <a href="{{route('order')}}">Sipariş Oluştur</a>
 
     <button type='button' onclick="window.location.href='{{route('main')}}'" class="btn-secondary"> Geri Dön</button>
 </body>
