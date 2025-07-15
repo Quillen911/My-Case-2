@@ -15,9 +15,12 @@ class CategorySeeder extends Seeder
     {
         $categories = [
             ['id' => 1, 'category_title' => 'Roman'],
-            ['id' => 2, 'category_title' => 'Şiir'],
-            ['id' => 3, 'category_title' => 'Tarih'],
-            ['id' => 4, 'category_title' => 'Felsefe'],
+            ['id' => 2, 'category_title' => 'Kişisel Gelişim'],
+            ['id' => 3, 'category_title' => 'Bilim'],
+            ['id' => 4, 'category_title' => 'Din Tasavvuf'],
+            ['id' => 5, 'category_title' => 'Öykü'],
+            ['id' => 6, 'category_title' => 'Felsefe'],
+            ['id' => 7, 'category_title' => 'Çocuk ve Gençlik'],
         ];
 
         foreach ($categories as $category) {

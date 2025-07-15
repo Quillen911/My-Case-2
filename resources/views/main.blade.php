@@ -49,7 +49,7 @@
             </tbody>
             
         </table>
-    <a href="/cart">Sepetim</a><br><br>
+    <a href="/bag">Sepetim</a><br><br>
     <form action="{{ route('logout') }}" method="POST">
         @csrf
       <button type="submit">Çıkış Yap</button>

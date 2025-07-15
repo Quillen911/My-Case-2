@@ -52,7 +52,7 @@
                 @endforeach
             </tbody>
     </table> <br>
-    <button>Satın Al</button><br>
+    <button>Satın Al</button><br>   
 
     <button type='button' onclick="window.location.href='{{route('main')}}'" class="btn-secondary"> Geri Dön</button>
 </body>

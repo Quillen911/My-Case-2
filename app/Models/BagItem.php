@@ -3,16 +3,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class CartItem extends Model 
+class BagItem extends Model 
 {
     protected $fillable = [
-        'cartItem_id', 
+        'bagItem_id', 
         'product_id', 
         'quantity'
     ];
     
-    public function cart() {
-        return $this->belongsTo(Cart::class);
+    public function bag() {
+        return $this->belongsTo(Bag::class);
     }
     
     public function product() {

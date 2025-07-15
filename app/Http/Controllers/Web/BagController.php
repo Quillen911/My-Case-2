@@ -4,28 +4,28 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Cart;
+use App\Models\Bag;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\CartItem;
+use App\Models\BagItem;
 use Illuminate\Support\Facades\Cache;
 
-class CartController extends Controller
+class BagController extends Controller
 {
-    public function cart(Request $request)
+    public function bag(Request $request)
     {
         $user = auth()->user();
-        $cart = Cart::where('Cart_User_id', $user->id)->first();
-        $products = $cart ? $cart->cartItem()->with('product.category')->get() : collect();
-        return view('cart', compact('products'));
+        $bag = Bag::where('Bag_User_id', $user->id)->first();
+        $products = $bag ? $bag->bagItem()->with('product.category')->get() : collect();
+        return view('bag', compact('products'));
     }
     public function add(Request $request)
     {
         
         $user = auth()->user(); 
-        $cart = Cart::firstOrCreate(['Cart_User_id' => $user->id]);
+        $bag = Bag::firstOrCreate(['Bag_User_id' => $user->id]);
 
-        $productItem = $cart->cartItem()->where('product_id', $request->product_id)->first();
+        $productItem = $bag->bagItem()->where('product_id', $request->product_id)->first();
         $product = Product::find($request->product_id);
         
         if ($product->stock_quantity == 0) {
@@ -38,7 +38,7 @@ class CartController extends Controller
             $product->save();
 
         } else {
-            $cart->cartItem()->create([
+            $bag->bagItem()->create([
                 'product_id' => $request->product_id,
                 'quantity' => 1
             ]);
@@ -51,24 +51,24 @@ class CartController extends Controller
     }
     public function delete($id)
     {   
-        $cartItem = CartItem::find($id);
+        $bagItem = BagItem::find($id);
 
-        if ($cartItem) {
-            $product = Product::find($cartItem->product_id);
+        if ($bagItem) {
+            $product = Product::find($bagItem->product_id);
             if ($product) {
                 $product->stock_quantity += 1;
                 $product->save();
             }
 
-            if ($cartItem->quantity > 1) {
-                $cartItem->quantity -= 1;
-                $cartItem->save();
+            if ($bagItem->quantity > 1) {
+                $bagItem->quantity -= 1;
+                $bagItem->save();
             } else {
-                $cartItem->delete();
+                $bagItem->delete();
             }
         }
 
         Cache::flush(); 
-        return redirect()->route('cart')->with('success', 'Ürün sepetten 1 adet silindi!');
+        return redirect()->route('bag')->with('success', 'Ürün sepetten 1 adet silindi!');
     }
 }
