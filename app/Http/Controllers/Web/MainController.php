@@ -14,7 +14,7 @@ class MainController extends Controller
     {
         $page = request('page', 1);
         $products = Cache::remember("products.page.$page", 60, function () {
-            return Product::with('category')->paginate(20);
+            return Product::with('category')->orderBy('id')->paginate(20);
         });
         
 
