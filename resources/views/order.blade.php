@@ -7,6 +7,13 @@
 </head>
 <body>
     <h1>Sipariş Özeti</h1>
+    @if(isset($success))
+        <p>{{$success}}</p>
+    @endif
+    @if(isset($error))
+        <p>{{$error}}</p>
+    @endif
+    
     <table border="5" cellpadding="8" cellspacing="0">
         <thead>
             <tr>
@@ -15,6 +22,7 @@
                 <th>Yazar</th>
                 <th>Ürün Sayısı</th>
                 <th>Fiyat</th>
+                <th>Toplam Fiyat</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +33,7 @@
                     <td>{{$p->product->author}}</td>
                     <td>{{$p->quantity}}</td>
                     <td>{{$p->product->list_price}}</td>
+                    <td>{{$p->product->list_price * $p->quantity}}</td>
                 </tr>
             @endforeach
         </tbody>
@@ -33,14 +42,23 @@
     @if($products->sum('product.list_price') < 50)
         <label>Kargo Ücreti</label> <label>10 TL </label> <br>
         <label>Toplam Fiyat</label> 
-        <label>{{$products->sum('product.list_price') + 10}} TL</label>
+        <label>{{$products->sum(function($item) {
+            return $item->quantity * $item->product->list_price;
+        }) + 10}} TL</label>
     @elseif($products->sum('product.list_price') > 50)    
         <label>Kargo Ücreti</label> <label>50 TL üzeri siparişlerde kargo ücretsizdir!</label> <br>
         <label>Toplam Fiyat</label> 
-        <label>{{$products->sum('product.list_price')}} TL</label>
+        <label>{{$products->sum(function($item) {
+            return $item->quantity * $item->product->list_price;
+        })}} TL</label>
     @endif
     
     <br>
+
+    <form action="{{route('ordergo')}}" method="POST">
+        @csrf
+        <button type="submit">Siparişi Tamamla</button>
+    </form>
     
     <a href="{{route('bag')}}">Sepetine geri dön</a>
 </body>

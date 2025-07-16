@@ -6,21 +6,30 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Foundation\Bus\Dispatchable;
+use App\Models\Order;
 
 class CreateOrderJob implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $orderData;
+    protected $orderData;
 
-    public function __construct($orderData)
+    public function __construct($orderData = null)
     {
         $this->orderData = $orderData;
     }
-
     public function handle()
     {
-        // Sipariş oluşturma işlemleri burada yapılır
-        // Örneğin: Order::create($this->orderData);
+        Log::info('CreateOrderJob çalıştı', ['orderData' => $this->orderData]);
+        Order::create([
+            'product_id' => $this->orderData['product_id'],
+            'Bag_User_id' => $this->orderData['Bag_User_id'],
+            'quantity' => $this->orderData['quantity'],
+            'price' => $this->orderData['price'],
+            'status' => $this->orderData['status'],
+        ]);
+
     }
 }

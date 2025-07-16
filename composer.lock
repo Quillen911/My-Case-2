@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bfe254d36d6961f0712f8cd347bb8ff0",
+    "content-hash": "28f156b5eeda866e8a9d4a2febcf39e0",
     "packages": [
         {
             "name": "brick/math",
@@ -5935,7 +5935,7 @@
         },
         {
             "name": "vladimir-yuldashev/laravel-queue-rabbitmq",
-            "version": "dev-master",
+            "version": "v14.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vyuldashev/laravel-queue-rabbitmq.git",
@@ -5964,7 +5964,6 @@
             "suggest": {
                 "ext-pcntl": "Required to use all features of the queue consumer."
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -8531,9 +8530,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "vladimir-yuldashev/laravel-queue-rabbitmq": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\BagItem;
 use Illuminate\Support\Facades\Cache;
 
+
 class BagController extends Controller
 {
     public function bag(Request $request)
@@ -36,7 +37,6 @@ class BagController extends Controller
             $productItem->save();
             $product->stock_quantity -= 1;
             $product->save();
-
         } else {
             $bag->bagItem()->create([
                 'product_id' => $request->product_id,
@@ -44,7 +44,6 @@ class BagController extends Controller
             ]);
             $product->stock_quantity -= 1;
             $product->save();
-
         }
         Cache::flush(); 
         return redirect()->route('main')->with('success', 'Ürün sepete eklendi!');

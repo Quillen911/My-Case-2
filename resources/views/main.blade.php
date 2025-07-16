@@ -50,6 +50,7 @@
             
         </table>
     <a href="/bag">Sepetim</a><br><br>
+    <a href="/myorders">Siparişlerim</a><br><br>
     <form action="{{ route('logout') }}" method="POST">
         @csrf
       <button type="submit">Çıkış Yap</button>

@@ -18,15 +18,20 @@ RUN apt-get update && apt-get install -y \
     curl \
     libzip-dev \
     libonig-dev \
-    libpq-dev
+    libpq-dev \
+    librabbitmq-dev \
+    libssl-dev
 
 # Clear cache
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install extensions (🔧 BURAYI GÜNCELLEDİK!)
-RUN docker-php-ext-install pdo_mysql pdo_pgsql pgsql mbstring zip exif pcntl
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql pdo_pgsql pgsql mbstring zip exif pcntl sockets
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd
+
+# Install AMQP extension for RabbitMQ
+RUN pecl install amqp && docker-php-ext-enable amqp
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -35,11 +40,20 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN groupadd -g 1000 www
 RUN useradd -u 1000 -ms /bin/bash -g www www
 
+# Copy composer files first for better caching
+COPY composer.json composer.lock ./
+
+# Install dependencies
+#RUN composer install --no-dev --optimize-autoloader --no-scripts
+
 # Copy existing application directory contents
 COPY . /var/www
 
 # Copy existing application directory permissions
 COPY --chown=www:www . /var/www
+
+# Generate optimized autoload files
+RUN composer dump-autoload --optimize
 
 # Change current user to www
 USER www

@@ -22,6 +22,8 @@ Route::middleware(['auth'])->group(function(){
     });
     Route::get('/order', [OrderController::class, 'order'])->name('order');
     Route::post('/ordergo', [OrderController::class, 'ordergo'])->name('ordergo');
+    Route::get('/myorders', [OrderController::class, 'myorders'])->name('myorders');
+    Route::get('/createOrderJob',[OrderController::class, 'CreateOrderJob'])->name('createOrderJob');
 
     Route::post('/logout',[AuthController::class, 'logout'])->name('logout');
 });    
